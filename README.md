@@ -12,6 +12,7 @@ clustering information
 	the original view clusterings
 	- suitbale for mid-sized data sets (up to ~10,000 objects)
 	- references:
+		- Cruickshank,  I.J. *Multi-view  Clustering  of  Social-based  Data*.  Ph.D. thesis, CMU-ISR-20-109. Carnegie Mellon University (7,2020)
 		- Cruickshank I., Carley K. M. *Analysis of Malware Communities Using Multi-Modal Features*. IEEE Access. 
 		8(1):77435-77448. May 2020. https://ieeexplore.ieee.org/document/9076000.
 		
@@ -20,6 +21,8 @@ data
 	- requires graphs for each view of the data
 	- outputs the cluster labels for the objects
 	- suitable for large data (up to ~1,000,000 objects) with partially incomplete views
+	- references:
+		- Cruickshank,  I.J. *Multi-view  Clustering  of  Social-based  Data*.  Ph.D. thesis, CMU-ISR-20-109. Carnegie Mellon University (7,2020)
 
 
 Each algorithm implementation is implemented as scikit-learn clustering module and can be used as such.
