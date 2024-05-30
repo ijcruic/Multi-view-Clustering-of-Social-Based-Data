@@ -6,14 +6,14 @@ multi-view, social-based data."""
 
 __author__  = "Iain Cruickshank"
 __license__ = "MIT"
-__version__ = "0.1"
+__version__ = "0.2"
 __email__   = "icruicks@andrew.cmu.edu"
 
 import numpy as np, pandas as pd, igraph as ig, leidenalg as la
 from sklearn.preprocessing import normalize
 from scipy.sparse import csr_matrix, issparse
 from sklearn.base import ClusterMixin
-from sknetwork.clustering import BiLouvain, bimodularity
+from sknetwork.clustering import Louvain, get_modularity
 from sklearn.utils.validation import check_symmetric
 
 
@@ -86,11 +86,11 @@ class CVIC(ClusterMixin):
             ca_matrix = np.mean(temp, axis=0)
 
         self._ca_matrix = ca_matrix
-        clstr = BiLouvain()
+        clstr = Louvain()
         clstr.fit(self._ca_matrix)
-        self._object_labels = clstr.row_labels_
-        self._cluster_labels = clstr.col_labels_
-        self._quality = bimodularity(self._ca_matrix, self._object_labels, 
+        self._object_labels = clstr.labels_row_
+        self._cluster_labels = clstr.labels_col_
+        self._quality = get_modularity(self._ca_matrix, self._object_labels, 
                                       self._cluster_labels)
         return self._object_labels
 

@@ -21,8 +21,17 @@ data
 	- requires graphs for each view of the data
 	- outputs the cluster labels for the objects
 	- suitable for large data (up to ~1,000,000 objects) with partially incomplete views
-	- references:
+	- references for its use:
 		- Cruickshank,  I.J. *Multi-view  Clustering  of  Social-based  Data*.  Ph.D. thesis, CMU-ISR-20-109. Carnegie Mellon University (7,2020)
-
+		- Cruickshank, I. J., & Carley, K. M. (2020). *Characterizing communities of hashtag usage on twitter during the 2020 COVID-19 pandemic by multi-view clustering* Applied Network Science, 5(1), 66.
+	- citation:
+		```
+  		@phdthesis{cruickshank2020multi,
+  		title={Multi-view Clustering of Social-based Data.},
+  		author={Cruickshank, Iain},
+		year={2020},
+		school={Carnegie Mellon University, USA}
+		}
+		```
 
 Each algorithm implementation is implemented as scikit-learn clustering module and can be used as such.
