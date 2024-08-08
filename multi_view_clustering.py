@@ -188,13 +188,13 @@ class MVMC(ClusterMixin):
                 print("Iteration: {} \n Modularities: {} \n Resolutions: {} \n Weights: {}"
                       .format(self.final_iteration, self.modularities[-1], resolutions, weights))
             
-            # if np.sum(np.array(self.weights[-1]) * np.array(self.modularities[-1])) > self.best_modularity:
-            self.best_clustering = self.clusterings[-1]
-            self.best_modularity = np.sum(np.array(self.weights[-1]) * np.array(self.modularities[-1]))
-            self.best_resolutions = self.resolutions[-1]
-            self.best_weights = self.weights[-1]
-            self.best_iteration = self.final_iteration
-                
+            if np.sum(np.array(self.weights[-1]) * np.array(self.modularities[-1])) > self.best_modularity:
+                self.best_clustering = self.clusterings[-1]
+                self.best_modularity = np.sum(np.array(self.weights[-1]) * np.array(self.modularities[-1]))
+                self.best_resolutions = self.resolutions[-1]
+                self.best_weights = self.weights[-1]
+                self.best_iteration = self.final_iteration
+            
             theta_in, theta_out = self._calculate_edge_probabilities(G)
             for i in range(len(G)):
                 resolutions[i] = (theta_in[i] - theta_out[i])/ (np.log(theta_in[i]) - np.log(theta_out[i]))
@@ -224,12 +224,13 @@ class MVMC(ClusterMixin):
     def _scipy_to_igraph(self, matrix):
         matrix.eliminate_zeros()
         sources, targets = matrix.nonzero()
-        weights = matrix[sources, targets]
+        weights = matrix.data
         graph = ig.Graph(n=matrix.shape[0], edges=list(zip(sources, targets)), directed=True, edge_attrs={'weight': weights})
+        #graph = ig.Graph.Weighted_Adjacency(matrix, attr="weight")
         
         try:
             check_symmetric(matrix, raise_exception=True)
-            graph = graph.as_undirected()
+            graph = graph.as_undirected(combine_edges="mean")
         except ValueError:
             pass
         
@@ -246,6 +247,7 @@ class MVMC(ClusterMixin):
         graph.es['weight'] = A[A.nonzero()]
         
         return graph
+
     
     def _calculate_edge_probabilities(self, G):
         theta_in =[]
